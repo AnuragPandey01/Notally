@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Notally</string>
+    <string-array name="color_set_background">
+        <item>"#E5B9AF"</item>
+        <item>"#C3C4E5"</item>
+        <item>"#C3EFC0"</item>
+        <item>"#F8FFC6"</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
