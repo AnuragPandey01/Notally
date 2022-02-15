@@ -1,4 +1,4 @@
-package com.nekodev.notally
+package com.nekodev.notally.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.nekodev.notally.R
 import com.nekodev.notally.adapter.NotesAdapter
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.NotesFragmentBinding
@@ -27,7 +27,7 @@ class NotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(layoutInflater,R.layout.notes_fragment,container,false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.notes_fragment,container,false)
         return binding.root
     }
 

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.nekodev.notally.R
-import com.nekodev.notally.colorPicker
+import com.nekodev.notally.util.colorPicker
 import com.nekodev.notally.database.Notes
 
 
