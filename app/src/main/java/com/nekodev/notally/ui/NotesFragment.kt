@@ -1,20 +1,24 @@
 package com.nekodev.notally.ui
 
-import androidx.lifecycle.ViewModelProvider
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.nekodev.notally.R
 import com.nekodev.notally.adapter.NotesAdapter
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.NotesFragmentBinding
+import com.nekodev.notally.util.SwipeGuesture
 
 
 class NotesFragment : Fragment() {
@@ -36,8 +40,7 @@ class NotesFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
         setOnClickListener()
         viewModel.getAllNotes().observe(viewLifecycleOwner){ noteList ->
-            Log.d("meow", "onViewCreated2: $noteList, ${viewModel.noteList}")
-            initRecyclerView(noteList)
+            setNotes(noteList)
         }
     }
 
@@ -47,12 +50,41 @@ class NotesFragment : Fragment() {
         }
     }
 
+    private fun setNotes(noteList: List<Notes>){
+        if(noteList.isEmpty()){
+            binding.emptyListAnim.visibility = View.VISIBLE
+            binding.tip.visibility = View.VISIBLE
+            return
+        }
+        binding.emptyListAnim.visibility =View.GONE
+        binding.tip.visibility = View.GONE
+        initRecyclerView(noteList)
+    }
+
     private fun initRecyclerView(noteList:List<Notes>){
-        Log.d("meow", "initRecyclerView: yess")
         val layoutManager = StaggeredGridLayoutManager(2 , LinearLayoutManager.VERTICAL)
         adapter = NotesAdapter(noteList)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager
+        ItemTouchHelper(swipeGesture).attachToRecyclerView(binding.recyclerView)
+    }
+
+    private val swipeGesture = object : SwipeGuesture() {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val note = adapter.onSwipe(viewHolder.adapterPosition)
+            viewModel.deleteNote(note)
+            showSnackBar(note)
+        }
+
+        private fun showSnackBar(note: Notes) {
+            Snackbar.make(binding.recyclerView, note.title,Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.addNote)
+                .setAction("UNDO") {
+                    viewModel.insertNote(note)
+                }
+                .setActionTextColor(Color.WHITE)
+                .show()
+        }
     }
 
 }
