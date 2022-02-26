@@ -1,11 +1,14 @@
 package com.nekodev.notally.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +18,7 @@ import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.content.ContextCompat.getSystemService
 
 class EditNoteFragment : Fragment() {
 
@@ -44,6 +48,9 @@ class EditNoteFragment : Fragment() {
             changeToViewMode()
             setTextField()
             isNewNote = false
+        }
+        if (isNewNote){
+            showKeyboard()
         }
         setOnClickListener()
     }
@@ -92,6 +99,7 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun onBack(){
+        hideKeyboard()
         findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
     }
 
@@ -100,8 +108,10 @@ class EditNoteFragment : Fragment() {
             Toast.makeText(requireContext(),"Already in edit mode",Toast.LENGTH_SHORT).show()
             return
         }
+        isEditMode = true
         setEditTextField()
         changeToEditMode()
+        showKeyboard()
     }
 
     private fun changeToViewMode() {
@@ -112,6 +122,7 @@ class EditNoteFragment : Fragment() {
             noteDescription.visibility = View.VISIBLE
             btnDone.visibility =View.GONE
         }
+        binding.btnEdit.setImageResource(R.drawable.ic_edit_outline)
     }
 
     private fun changeToEditMode() {
@@ -122,14 +133,15 @@ class EditNoteFragment : Fragment() {
             noteDescription.visibility = View.GONE
             btnDone.visibility = View.VISIBLE
         }
-        //changing edit icon
         binding.btnEdit.setImageResource(R.drawable.ic_edit_filled)
     }
 
     private fun setEditTextField() {
         val noteToEdit = args.clickedNote
         binding.noteEditTitle.setText(noteToEdit?.title)
+        binding.noteEditTitle.requestFocus()
         binding.noteEditDescription.setText(noteToEdit?.body)
+        showKeyboard()
     }
 
     private fun setTextField() {
@@ -142,5 +154,17 @@ class EditNoteFragment : Fragment() {
         val calendar = Calendar.getInstance()
         val simpleDateFormat = SimpleDateFormat("dd LLL yyyy")
         return simpleDateFormat.format(calendar.time).toString()
+    }
+
+    private fun showKeyboard() {
+        binding.noteEditTitle.requestFocus()
+        val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.showSoftInput(binding.noteEditTitle, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    private fun hideKeyboard(){
+        binding.noteEditTitle.requestFocus()
+        val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.noteEditTitle.windowToken,0)
     }
 }
