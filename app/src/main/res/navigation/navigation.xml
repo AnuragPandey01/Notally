@@ -38,9 +38,5 @@
             android:name="editMode"
             app:argType="boolean"
             android:defaultValue="true" />
-        <argument
-            android:name="noteId"
-            app:argType="integer"
-            android:defaultValue="0" />
     </fragment>
 </navigation>

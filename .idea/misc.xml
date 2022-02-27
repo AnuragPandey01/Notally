@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/bottomsheet.xml" value="0.1" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/custom_fab.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/ic_add.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/ic_back.xml" value="0.22708333333333333" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/ic_search.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/drawable/splash_image.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/layout/activity_main.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/layout/delete_bottomsheet.xml" value="0.4" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/layout/fragment_detail_note.xml" value="0.176" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/layout/fragment_edit_note.xml" value="0.176" />
         <entry key="..\:/Users/pandey anurag/AndroidStudioProjects/Notally/app/src/main/res/layout/notes_fragment.xml" value="0.2" />

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.nekodev.notally.R
 import com.nekodev.notally.adapter.NotesAdapter
@@ -82,7 +83,7 @@ class NotesFragment : Fragment() {
                 .setAction("UNDO") {
                     viewModel.insertNote(note)
                 }
-                .setBackgroundTint(Color.LTGRAY)
+                .setBackgroundTint(Color.parseColor("#fbfbfb"))
                 .setActionTextColor(Color.BLUE)
                 .show()
         }

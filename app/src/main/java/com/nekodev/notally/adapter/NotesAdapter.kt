@@ -19,7 +19,6 @@ import com.nekodev.notally.ui.NotesViewModel
 import com.nekodev.notally.util.ColorPicker
 import com.nekodev.notally.util.SwipeGuesture
 
-
 class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +32,7 @@ class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<Notes
         holder.date.text = currentNotes.date
         holder.noteHolder.setCardBackgroundColor(Color.parseColor(ColorPicker.getBackgroundColor()))
         holder.root.setOnClickListener {
-            val action = NotesFragmentDirections.actionNotesFragmentToDetailNoteFragment(noteList[position],false,currentNotes.id)
+            val action = NotesFragmentDirections.actionNotesFragmentToDetailNoteFragment(noteList[position],false)
             it.findNavController().navigate(action)
         }
     }
@@ -46,9 +45,7 @@ class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<Notes
         val title: TextView = itemView.findViewById(R.id.note_title)
         val date: TextView = itemView.findViewById(R.id.date)
         val noteHolder: CardView = itemView.findViewById(R.id.note_holder)
-        val root = itemView.rootView
-
-
+        val root: View = itemView.rootView
     }
 
     fun onSwipe(position: Int): Notes{

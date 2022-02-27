@@ -7,18 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nekodev.notally.R
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.core.content.ContextCompat.getSystemService
 
 class EditNoteFragment : Fragment() {
 
@@ -26,33 +26,36 @@ class EditNoteFragment : Fragment() {
     private lateinit var viewModel: NotesViewModel
     private lateinit var args: EditNoteFragmentArgs
     private var isEditMode:Boolean? = null
-    private var isNewNote= true
+    private var isNewNote = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        binding = DataBindingUtil.inflate(layoutInflater,
-            R.layout.fragment_edit_note,container,false)
-        //get arguments
-        args = EditNoteFragmentArgs.fromBundle(arguments!!)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_edit_note,container,false)
+
+        //get arguments arguments(clickedNote:Notes?, editMode = true)
+        args = EditNoteFragmentArgs.fromBundle(requireArguments())
         isEditMode = args.editMode
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
+
+        setOnClickListener()
+
         //check if not in edit mode than change layout for view mode
-        if (isEditMode == false ){
+        if (args.clickedNote != null ){
             changeToViewMode()
             setTextField()
             isNewNote = false
         }
-        if (isNewNote){
+        else{
             showKeyboard()
         }
-        setOnClickListener()
     }
 
     private fun setOnClickListener() {
@@ -63,12 +66,12 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun deleteNote() {
-        if(isEditMode!!){
+        if(isEditMode == true ){
             Toast.makeText(requireContext(),"Can't delete in edit mode",Toast.LENGTH_SHORT).show()
             return
         }
-        viewModel.deleteNote(args.clickedNote!!)
-        findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
+        hideKeyboard()
+        setUpBottomSheet()
     }
 
     private fun onDone(){
@@ -87,7 +90,7 @@ class EditNoteFragment : Fragment() {
         Log.d("meow", "updateNote: yes ")
         val title = binding.noteEditTitle.text.toString()
         val description = binding.noteEditDescription.text.toString()
-        viewModel.updateNote( Notes(args.noteId, title, description, getDate()) )
+        viewModel.updateNote( Notes(args.clickedNote!!.id, title, description, getDate()) )
         onBack()
     }
 
@@ -166,5 +169,21 @@ class EditNoteFragment : Fragment() {
         binding.noteEditTitle.requestFocus()
         val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(binding.noteEditTitle.windowToken,0)
+    }
+
+    private fun setUpBottomSheet() {
+        val bottomSheet = BottomSheetDialog(requireContext())
+        bottomSheet.setContentView(R.layout.delete_bottomsheet)
+        val btnBottomSheetYes = bottomSheet.findViewById<Button>(R.id.yes)
+        val btnBottomSheetNo = bottomSheet.findViewById<Button>(R.id.no)
+        bottomSheet.show()
+        btnBottomSheetYes?.setOnClickListener {
+            viewModel.deleteNote(args.clickedNote!!)
+            bottomSheet.dismiss()
+            findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
+        }
+        btnBottomSheetNo?.setOnClickListener {
+            bottomSheet.dismiss()
+        }
     }
 }

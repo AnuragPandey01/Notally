@@ -59,6 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    android:textAlignment="center"
                     android:textColor="@color/color_text"
                     android:fontFamily="@font/nunito_bold"
                     android:layout_marginTop="16dp"
@@ -69,13 +70,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
+                    android:textAlignment="center"
                     android:background="@null"
                     android:textColorHint="#9A9A9A"
                     android:fontFamily="@font/nunito_bold"
                     android:layout_marginTop="16dp"
                     android:textSize="25sp"
                     android:textColor="@color/color_text"
-                    android:autofillHints="name"
                     android:inputType="textMultiLine" />
 
                 <View
@@ -88,9 +89,9 @@
                     android:id="@+id/note_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/type_something"
                     android:textSize="17sp"
                     android:visibility="gone"
+                    android:textAlignment="center"
                     android:textColor="@color/color_text"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/nunito_bold" />
@@ -98,15 +99,15 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/note_edit_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/type_something"
+                    android:layout_height="300dp"
+                    android:hint="@string/description_goes_here"
                     android:textColorHint="#9A9A9A"
                     android:layout_marginTop="8dp"
                     android:textSize="17sp"
+                    android:gravity="center_horizontal"
                     android:textColor="@color/color_text"
                     android:background="@null"
                     android:fontFamily="@font/nunito_bold"
-                    android:autofillHints="name"
                     android:inputType="textMultiLine" />
 
             </LinearLayout>
