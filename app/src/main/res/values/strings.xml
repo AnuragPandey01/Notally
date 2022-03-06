@@ -13,4 +13,5 @@
     <string name="no">No</string>
     <string name="description_goes_here">Description goes here</string>
     <string name="edit">edit</string>
+    <string name="save">Save</string>
 </resources>

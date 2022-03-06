@@ -2,6 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/background_color"/>
 
-    <item android:drawable="@drawable/ic_launcher_foreground" android:gravity="center"/>
+    <item android:drawable="@drawable/ic_launcher_foreground" android:gravity="center"
+        android:height="200dp" android:width="200dp"/>
 
 </layer-list>
