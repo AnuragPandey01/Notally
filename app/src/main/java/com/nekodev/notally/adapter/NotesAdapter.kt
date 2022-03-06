@@ -27,10 +27,8 @@ class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<Notes
         holder.date.text = currentNotes.date
         holder.noteHolder.setCardBackgroundColor(Color.parseColor(ColorPicker.getBackgroundColor()))
         holder.noteHolder.setOnClickListener {
-            holder.title.transitionName = "title_anim"
-            val extra = FragmentNavigatorExtras(holder.title to "title_anims")
             val action = NotesFragmentDirections.actionNotesFragmentToDetailNoteFragment(noteList[position])
-            it.findNavController().navigate( action, extra )
+            it.findNavController().navigate( action )
         }
     }
 

@@ -3,14 +3,12 @@ package com.nekodev.notally.ui
 import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.transition.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -25,10 +23,12 @@ import java.util.*
 class EditNoteFragment : Fragment() {
 
     private lateinit var binding: FragmentEditNoteBinding
-    private lateinit var viewModel: NotesViewModel
     private lateinit var args: EditNoteFragmentArgs
     private var isNewNote = true
 
+    private val viewModel : NotesViewModel by lazy {
+        ViewModelProvider(this).get(NotesViewModel::class.java)
+    }
     private val inputManager : InputMethodManager by lazy {
         requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
@@ -38,9 +38,6 @@ class EditNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View{
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_edit_note,container,false)
-        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
-        sharedElementEnterTransition = animation
-        sharedElementReturnTransition = animation
 
         binding.notesViewModel = viewModel
         binding.lifecycleOwner = this
@@ -51,25 +48,17 @@ class EditNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
 
         setOnClickListener()
 
         //check if not in edit mode than change layout for view mode
         if (args.clickedNote != null ){
+            binding.clickedNote = args.clickedNote
             viewModel.notifyModeChanged()
             isNewNote = false
         }
         viewModel.isEditMode.observe(viewLifecycleOwner){ isEditMode ->
-            if(!isEditMode){
-                changeToViewMode()
-                setTextField()
-            }
-            else{
-                changeToEditMode()
-                setEditTextField()
-                showKeyboard()
-            }
+            if(isEditMode) showKeyboard()
         }
     }
 
@@ -119,32 +108,6 @@ class EditNoteFragment : Fragment() {
 
     private fun onEditClicked() {
         viewModel.notifyModeChanged()
-    }
-
-    private fun changeToViewMode() {
-        binding.apply {
-            noteEditTitle.visibility = View.GONE
-            noteTitle.visibility = View.VISIBLE
-            noteEditDescription.visibility = View.GONE
-            noteDescription.visibility = View.VISIBLE
-            btnDone.visibility =View.GONE
-            btnEdit.visibility = View.VISIBLE
-            btnDelete.visibility = View.VISIBLE
-            btnDone.visibility = View.GONE
-        }
-    }
-
-    private fun changeToEditMode() {
-        binding.apply {
-            noteEditTitle.visibility = View.VISIBLE
-            noteTitle.visibility = View.GONE
-            noteEditDescription.visibility = View.VISIBLE
-            noteDescription.visibility = View.GONE
-            btnDone.visibility = View.VISIBLE
-            btnEdit.visibility = View.GONE
-            btnDelete.visibility = View.GONE
-            btnDone.visibility = View.VISIBLE
-        }
     }
 
     private fun setEditTextField() {

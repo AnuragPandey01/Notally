@@ -5,9 +5,13 @@
     tools:context=".ui.EditNoteFragment">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="notesViewModel"
             type="com.nekodev.notally.ui.NotesViewModel" />
+        <variable
+            name="clickedNote"
+            type="com.nekodev.notally.database.Notes" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +39,7 @@
             android:src="@drawable/ic_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/btn_back"
-            android:visibility="gone"
+            android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/btn_back"
             android:contentDescription="@string/back" />
 
@@ -46,7 +50,7 @@
             android:background="@drawable/icon_background"
             android:src="@drawable/ic_edit_filled"
             android:layout_marginEnd="8dp"
-            android:visibility="gone"
+            android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@id/btn_delete"
             app:layout_constraintTop_toTopOf="@id/btn_back"
             app:layout_constraintBottom_toBottomOf="@id/btn_back"
@@ -64,6 +68,7 @@
             app:cornerRadius="8dp"
             android:textSize="16sp"
             android:textAllCaps="false"
+            android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="@id/btn_back"
             app:layout_constraintBottom_toBottomOf="@id/btn_back"
             android:contentDescription="@string/back" />
@@ -83,8 +88,9 @@
                 <TextView
                     android:id="@+id/note_title"
                     android:layout_width="match_parent"
+                    android:text="@{clickedNote.title}"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
                     android:textAlignment="center"
                     android:transitionName="title_anims"
                     android:textColor="@color/color_text"
@@ -96,6 +102,7 @@
                     android:id="@+id/note_edit_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{clickedNote!= null ? clickedNote.title : null}"
                     android:hint="@string/title"
                     android:textAlignment="center"
                     android:background="@null"
@@ -103,6 +110,7 @@
                     android:fontFamily="@font/nunito_bold"
                     android:layout_marginTop="16dp"
                     android:textSize="25sp"
+                    android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
                     android:textColor="@color/color_text"
                     android:inputType="textMultiLine" />
 
@@ -116,8 +124,9 @@
                     android:id="@+id/note_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{clickedNote.body}"
                     android:textSize="17sp"
-                    android:visibility="gone"
+                    android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
                     android:textAlignment="center"
                     android:textColor="@color/color_text"
                     android:layout_marginTop="8dp"
@@ -128,10 +137,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="700dp"
                     android:hint="@string/description_goes_here"
+                    android:text="@{clickedNote!= null ? clickedNote.body : null}"
                     android:textColorHint="#9A9A9A"
                     android:layout_marginTop="8dp"
                     android:textSize="17sp"
                     android:gravity="center_horizontal"
+                    android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
                     android:textColor="@color/color_text"
                     android:background="@null"
                     android:fontFamily="@font/nunito_bold"
