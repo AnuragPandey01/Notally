@@ -2,6 +2,8 @@ package com.nekodev.notally.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.transition.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,19 +27,25 @@ class EditNoteFragment : Fragment() {
     private lateinit var binding: FragmentEditNoteBinding
     private lateinit var viewModel: NotesViewModel
     private lateinit var args: EditNoteFragmentArgs
-    private var isEditMode:Boolean? = null
     private var isNewNote = true
+
+    private val inputManager : InputMethodManager by lazy {
+        requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_edit_note,container,false)
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
 
+        binding.notesViewModel = viewModel
+        binding.lifecycleOwner = this
         //get arguments arguments(clickedNote:Notes?, editMode = true)
         args = EditNoteFragmentArgs.fromBundle(requireArguments())
-        isEditMode = args.editMode
-
         return binding.root
     }
 
@@ -49,12 +57,19 @@ class EditNoteFragment : Fragment() {
 
         //check if not in edit mode than change layout for view mode
         if (args.clickedNote != null ){
-            changeToViewMode()
-            setTextField()
+            viewModel.notifyModeChanged()
             isNewNote = false
         }
-        else{
-            showKeyboard()
+        viewModel.isEditMode.observe(viewLifecycleOwner){ isEditMode ->
+            if(!isEditMode){
+                changeToViewMode()
+                setTextField()
+            }
+            else{
+                changeToEditMode()
+                setEditTextField()
+                showKeyboard()
+            }
         }
     }
 
@@ -66,10 +81,6 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun deleteNote() {
-        if(isEditMode == true ){
-            Toast.makeText(requireContext(),"Can't delete in edit mode",Toast.LENGTH_SHORT).show()
-            return
-        }
         hideKeyboard()
         setUpBottomSheet()
     }
@@ -107,14 +118,7 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun onEditClicked() {
-        if(isEditMode == true){
-            Toast.makeText(requireContext(),"Already in edit mode",Toast.LENGTH_SHORT).show()
-            return
-        }
-        isEditMode = true
-        setEditTextField()
-        changeToEditMode()
-        showKeyboard()
+        viewModel.notifyModeChanged()
     }
 
     private fun changeToViewMode() {
@@ -124,8 +128,10 @@ class EditNoteFragment : Fragment() {
             noteEditDescription.visibility = View.GONE
             noteDescription.visibility = View.VISIBLE
             btnDone.visibility =View.GONE
+            btnEdit.visibility = View.VISIBLE
+            btnDelete.visibility = View.VISIBLE
+            btnDone.visibility = View.GONE
         }
-        binding.btnEdit.setImageResource(R.drawable.ic_edit_outline)
     }
 
     private fun changeToEditMode() {
@@ -135,8 +141,10 @@ class EditNoteFragment : Fragment() {
             noteEditDescription.visibility = View.VISIBLE
             noteDescription.visibility = View.GONE
             btnDone.visibility = View.VISIBLE
+            btnEdit.visibility = View.GONE
+            btnDelete.visibility = View.GONE
+            btnDone.visibility = View.VISIBLE
         }
-        binding.btnEdit.setImageResource(R.drawable.ic_edit_filled)
     }
 
     private fun setEditTextField() {
@@ -161,13 +169,11 @@ class EditNoteFragment : Fragment() {
 
     private fun showKeyboard() {
         binding.noteEditTitle.requestFocus()
-        val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.showSoftInput(binding.noteEditTitle, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun hideKeyboard(){
         binding.noteEditTitle.requestFocus()
-        val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(binding.noteEditTitle.windowToken,0)
     }
 

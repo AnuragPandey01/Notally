@@ -12,11 +12,7 @@
         tools:layout="@layout/notes_fragment" >
         <action
             android:id="@+id/action_notesFragment_to_detailNoteFragment"
-            app:destination="@id/detailNoteFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/detailNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailNoteFragment"
@@ -25,18 +21,11 @@
         tools:layout="@layout/fragment_edit_note" >
         <action
             android:id="@+id/action_detailNoteFragment_to_notesFragment"
-            app:destination="@id/notesFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/navigation" />
+            app:destination="@id/notesFragment" />
         <argument
             android:name="clickedNote"
             app:argType="com.nekodev.notally.database.Notes"
             app:nullable="true"
             android:defaultValue="@null" />
-        <argument
-            android:name="editMode"
-            app:argType="boolean"
-            android:defaultValue="true" />
     </fragment>
 </navigation>

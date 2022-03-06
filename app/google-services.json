@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1014855838524",
+    "project_id": "notally-1e206",
+    "storage_bucket": "notally-1e206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014855838524:android:0db1ed727bfd0859b10c39",
+        "android_client_info": {
+          "package_name": "com.nekodev.notally"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014855838524-7k5ngndk3p745he1sq4o7obrequ4vam7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8jyJV1V3Wfpl0QBOtiHiZTIQ6xonXZ54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014855838524-7k5ngndk3p745he1sq4o7obrequ4vam7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
