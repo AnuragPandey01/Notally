@@ -2,7 +2,6 @@ package com.nekodev.notally.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -108,20 +107,6 @@ class EditNoteFragment : Fragment() {
 
     private fun onEditClicked() {
         viewModel.notifyModeChanged()
-    }
-
-    private fun setEditTextField() {
-        val noteToEdit = args.clickedNote
-        binding.noteEditTitle.setText(noteToEdit?.title)
-        binding.noteEditTitle.requestFocus()
-        binding.noteEditDescription.setText(noteToEdit?.body)
-        showKeyboard()
-    }
-
-    private fun setTextField() {
-        val noteToEdit = args.clickedNote
-        binding.noteTitle.text = noteToEdit?.title
-        binding.noteDescription.text = noteToEdit?.body
     }
 
     private fun getDate(): String{
