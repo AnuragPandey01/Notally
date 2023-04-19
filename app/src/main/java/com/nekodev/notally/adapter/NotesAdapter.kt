@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.nekodev.notally.R
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.ui.NotesFragmentDirections
 import com.nekodev.notally.util.ColorPicker
 
-class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.notes_item_view,parent,false)
@@ -44,5 +43,9 @@ class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<Notes
 
     fun onSwipe(position: Int): Notes{
         return noteList[position]
+    }
+    fun filterList(filteredList: List<Notes>) {
+        noteList = filteredList
+        notifyDataSetChanged()
     }
 }

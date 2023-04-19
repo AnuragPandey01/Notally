@@ -8,6 +8,41 @@
     android:padding="16dp"
     tools:context=".ui.NotesFragment">
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:visibility="gone"
+        app:startIconTint="@color/white"
+        android:gravity="center"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        app:boxBackgroundColor="@color/icon_background"
+        app:startIconDrawable="@drawable/ic_back">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunito_regular"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:textColor="#fbfbfb"
+            android:textSize="18sp"
+            android:maxLines="1"/>
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/notes_heading"
         android:layout_width="wrap_content"
@@ -15,21 +50,21 @@
         android:layout_marginHorizontal="8dp"
         android:fontFamily="@font/nunito_extra_bold"
         android:text="@string/notes"
+        android:layout_weight="1"
         android:textColor="#fbfbfb"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
+        android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:background="@drawable/icon_background"
         android:contentDescription="@string/search_notes"
-        android:src="@drawable/ic_search"
-        app:layout_constraintEnd_toEndOf="@+id/recycler_view"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:src="@drawable/ic_search" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -38,7 +73,7 @@
         android:layout_marginTop="8dp"
         android:paddingTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notes_heading" />
+        app:layout_constraintTop_toBottomOf="@id/header_container" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_note"

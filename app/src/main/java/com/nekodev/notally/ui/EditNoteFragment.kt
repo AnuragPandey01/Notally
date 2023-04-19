@@ -1,13 +1,9 @@
 package com.nekodev.notally.ui
 
-import android.content.Context
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nekodev.notally.R
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
-import kotlinx.coroutines.CoroutineScope
+import com.nekodev.notally.util.hideKeyboard
+import com.nekodev.notally.util.showKeyboard
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,9 +30,7 @@ class EditNoteFragment : Fragment() {
     private val viewModel : NotesViewModel by lazy {
         ViewModelProvider(this).get(NotesViewModel::class.java)
     }
-    private val inputManager : InputMethodManager by lazy {
-        requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +59,7 @@ class EditNoteFragment : Fragment() {
 
         viewModel.isEditMode.observe(viewLifecycleOwner){ isEditMode ->
             if(isEditMode) {
-                showKeyboard()
+                requireContext().showKeyboard(binding.etTitle)
                 binding.etTitle.isEnabled = true
                 binding.etTitle.isClickable = true
                 binding.etContent.isEnabled = true
@@ -103,7 +98,7 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun deleteNote() {
-        hideKeyboard()
+        requireContext().hideKeyboard(binding.etTitle)
         setUpBottomSheet()
     }
 
@@ -148,14 +143,6 @@ class EditNoteFragment : Fragment() {
         return simpleDateFormat.format(calendar.time).toString()
     }
 
-    private fun showKeyboard() {
-        binding.etTitle.requestFocus()
-        inputManager.showSoftInput(binding.etTitle, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    private fun hideKeyboard(){
-        inputManager.hideSoftInputFromWindow(binding.etTitle.windowToken,0)
-    }
     private fun setUpBottomSheet() {
         val bottomSheet = BottomSheetDialog(requireContext())
         bottomSheet.setContentView(R.layout.delete_bottomsheet)

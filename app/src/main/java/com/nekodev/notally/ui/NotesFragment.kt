@@ -2,6 +2,8 @@ package com.nekodev.notally.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +20,15 @@ import com.nekodev.notally.adapter.NotesAdapter
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.NotesFragmentBinding
 import com.nekodev.notally.util.SwipeGuesture
+import com.nekodev.notally.util.hideKeyboard
+import com.nekodev.notally.util.showKeyboard
 
 class NotesFragment : Fragment() {
 
     private lateinit var viewModel: NotesViewModel
     private lateinit var binding : NotesFragmentBinding
     private lateinit var adapter: NotesAdapter
+    private var mList: List<Notes> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +37,13 @@ class NotesFragment : Fragment() {
         binding = NotesFragmentBinding.inflate(layoutInflater)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
         setOnClickListener()
         viewModel.getAllNotes().observe(viewLifecycleOwner){ noteList ->
             setNotes(noteList)
+            mList = noteList
         }
     }
 
@@ -46,6 +51,47 @@ class NotesFragment : Fragment() {
         binding.addNote.setOnClickListener {
             findNavController().navigate(R.id.action_notesFragment_to_detailNoteFragment)
         }
+        binding.btnSearch.setOnClickListener {
+            binding.ilSearch.visibility = View.VISIBLE
+            binding.btnSearch.visibility = View.GONE
+            binding.notesHeading.visibility = View.GONE
+
+            requireContext().showKeyboard(binding.etSearch)
+        }
+
+        binding.ilSearch.setStartIconOnClickListener{
+            binding.ilSearch.visibility = View.GONE
+            binding.btnSearch.visibility = View.VISIBLE
+            binding.notesHeading.visibility = View.VISIBLE
+
+            adapter.filterList(mList)
+            requireContext().hideKeyboard(binding.etSearch)
+        }
+
+        binding.etSearch.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filter(s.toString())
+            }
+
+        })
+    }
+
+    private fun filter(string: String) {
+        val filteredList: ArrayList<Notes> = ArrayList()
+        for(item in mList){
+            if(item.title.lowercase().contains(string.lowercase())){
+                filteredList.add(item)
+            }
+        }
+        adapter.filterList(filteredList)
     }
 
     private fun setNotes(noteList: List<Notes>){
@@ -75,7 +121,7 @@ class NotesFragment : Fragment() {
         }
 
         private fun showSnackBar(note: Notes) {
-            Snackbar.make(binding.recyclerView, note.title,Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, note.title,Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.addNote)
                 .setAction("UNDO") {
                     viewModel.insertNote(note)
