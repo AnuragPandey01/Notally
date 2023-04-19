@@ -27,7 +27,7 @@ class NotesAdapter(private val noteList: List<Notes>):RecyclerView.Adapter<Notes
         holder.date.text = currentNotes.date
         holder.noteHolder.setCardBackgroundColor(Color.parseColor(ColorPicker.getBackgroundColor()))
         holder.noteHolder.setOnClickListener {
-            val action = NotesFragmentDirections.actionNotesFragmentToDetailNoteFragment(noteList[position])
+            val action = NotesFragmentDirections.actionNotesFragmentToDetailNoteFragment(currentNotes.id)
             it.findNavController().navigate( action )
         }
     }

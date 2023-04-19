@@ -1,155 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.EditNoteFragment">
+    tools:context=".ui.EditNoteFragment"
+    android:background="@color/background_color"
+    android:paddingTop="25dp"
+    android:paddingHorizontal="25dp"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="notesViewModel"
-            type="com.nekodev.notally.ui.NotesViewModel" />
-        <variable
-            name="clickedNote"
-            type="com.nekodev.notally.database.Notes" />
-    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_background"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/back" />
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_background"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        android:contentDescription="@string/back" />
+
+    <ImageButton
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_background"
+        android:src="@drawable/ic_edit_outline"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_delete"
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        android:contentDescription="@string/edit" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/icon_background"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/save"
+        style="@style/bottomSheetButton"
+        app:cornerRadius="8dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        android:contentDescription="@string/back" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color"
-        android:paddingTop="25dp"
-        android:paddingHorizontal="25dp">
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textColor="@color/color_text"
+        app:layout_constraintTop_toBottomOf="@id/btn_back"
+        android:textColorHint="#A9A9A9"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="25sp"
+        android:layout_marginTop="12dp"
+        android:background="@null">
+        <requestFocus/>
+    </androidx.appcompat.widget.AppCompatEditText>
 
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_background"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/back" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/et_title"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageButton
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_background"
-            android:src="@drawable/ic_delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_back"
-            android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/btn_back"
-            android:contentDescription="@string/back" />
-
-        <ImageButton
-            android:id="@+id/btn_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_background"
-            android:src="@drawable/ic_edit_outline"
-            android:layout_marginEnd="8dp"
-            android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/btn_delete"
-            app:layout_constraintTop_toTopOf="@id/btn_back"
-            app:layout_constraintBottom_toBottomOf="@id/btn_back"
-            android:contentDescription="@string/edit" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/icon_background"
-            android:src="@drawable/ic_delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/save"
-            style="@style/bottomSheetButton"
-            app:cornerRadius="8dp"
-            android:textSize="16sp"
-            android:textAllCaps="false"
-            android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toTopOf="@id/btn_back"
-            app:layout_constraintBottom_toBottomOf="@id/btn_back"
-            android:contentDescription="@string/back" />
-
-        <ScrollView
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_back"
-            android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/note_title"
-                    android:layout_width="match_parent"
-                    android:text="@{clickedNote.title}"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
-                    android:textAlignment="center"
-                    android:transitionName="title_anims"
-                    android:textColor="@color/color_text"
-                    android:fontFamily="@font/nunito_bold"
-                    android:layout_marginTop="16dp"
-                    android:textSize="25sp" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/note_edit_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{clickedNote!= null ? clickedNote.title : null}"
-                    android:hint="@string/title"
-                    android:textAlignment="center"
-                    android:background="@null"
-                    android:textColorHint="#9A9A9A"
-                    android:fontFamily="@font/nunito_bold"
-                    android:layout_marginTop="16dp"
-                    android:textSize="25sp"
-                    android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
-                    android:textColor="@color/color_text"
-                    android:inputType="textMultiLine" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="@drawable/icon_background"/>
-
-                <TextView
-                    android:id="@+id/note_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{clickedNote.body}"
-                    android:textSize="17sp"
-                    android:visibility="@{notesViewModel.isEditMode ? View.GONE : View.VISIBLE}"
-                    android:textAlignment="center"
-                    android:textColor="@color/color_text"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/nunito_bold" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/note_edit_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="700dp"
-                    android:hint="@string/description_goes_here"
-                    android:text="@{clickedNote!= null ? clickedNote.body : null}"
-                    android:textColorHint="#9A9A9A"
-                    android:layout_marginTop="8dp"
-                    android:textSize="17sp"
-                    android:gravity="center_horizontal"
-                    android:visibility="@{notesViewModel.isEditMode ? View.VISIBLE : View.GONE}"
-                    android:textColor="@color/color_text"
-                    android:background="@null"
-                    android:fontFamily="@font/nunito_bold"
-                    android:inputType="textMultiLine" />
-
-            </LinearLayout>
-        </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_text"
+            android:hint="@string/description_goes_here"
+            android:textColorHint="#a9a9a9"
+            android:background="@null"
+            android:fontFamily="@font/nunito_regular"/>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

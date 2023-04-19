@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,14 +12,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.nekodev.notally.R
 import com.nekodev.notally.adapter.NotesAdapter
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.NotesFragmentBinding
 import com.nekodev.notally.util.SwipeGuesture
-
 
 class NotesFragment : Fragment() {
 
@@ -32,7 +29,7 @@ class NotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.notes_fragment,container,false)
+        binding = NotesFragmentBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -73,7 +70,7 @@ class NotesFragment : Fragment() {
     private val swipeGesture = object : SwipeGuesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val note = adapter.onSwipe(viewHolder.adapterPosition)
-            viewModel.deleteNote(note)
+            viewModel.deleteNote(note.id)
             showSnackBar(note)
         }
 
@@ -83,8 +80,8 @@ class NotesFragment : Fragment() {
                 .setAction("UNDO") {
                     viewModel.insertNote(note)
                 }
-                .setBackgroundTint(Color.parseColor("#fbfbfb"))
-                .setActionTextColor(Color.BLUE)
+                .setBackgroundTint(resources.getColor(R.color.icon_background,null))
+                .setActionTextColor(Color.WHITE)
                 .show()
         }
     }

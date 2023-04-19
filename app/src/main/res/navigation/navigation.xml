@@ -24,8 +24,7 @@
             app:destination="@id/notesFragment" />
         <argument
             android:name="clickedNote"
-            app:argType="com.nekodev.notally.database.Notes"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

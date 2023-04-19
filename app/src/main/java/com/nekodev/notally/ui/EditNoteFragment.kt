@@ -1,29 +1,34 @@
 package com.nekodev.notally.ui
 
 import android.content.Context
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
-import android.util.Log
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nekodev.notally.R
 import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
 class EditNoteFragment : Fragment() {
 
     private lateinit var binding: FragmentEditNoteBinding
-    private lateinit var args: EditNoteFragmentArgs
-    private var isNewNote = true
+    private var noteId  = -1
+    private var isNewNote = false
 
     private val viewModel : NotesViewModel by lazy {
         ViewModelProvider(this).get(NotesViewModel::class.java)
@@ -36,12 +41,11 @@ class EditNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_edit_note,container,false)
+        binding = FragmentEditNoteBinding.inflate(layoutInflater)
 
-        binding.notesViewModel = viewModel
-        binding.lifecycleOwner = this
         //get arguments arguments(clickedNote:Notes?, editMode = true)
-        args = EditNoteFragmentArgs.fromBundle(requireArguments())
+        noteId = EditNoteFragmentArgs.fromBundle(requireArguments()).clickedNote
+
         return binding.root
     }
 
@@ -50,14 +54,44 @@ class EditNoteFragment : Fragment() {
 
         setOnClickListener()
 
-        //check if not in edit mode than change layout for view mode
-        if (args.clickedNote != null ){
-            binding.clickedNote = args.clickedNote
-            viewModel.notifyModeChanged()
-            isNewNote = false
+        if(noteId == -1){
+            isNewNote = true
+            viewModel.setIsEditMode(true)
+        }else{
+            setNoteContent()
+            viewModel.setIsEditMode(false)
         }
+
         viewModel.isEditMode.observe(viewLifecycleOwner){ isEditMode ->
-            if(isEditMode) showKeyboard()
+            if(isEditMode) {
+                showKeyboard()
+                binding.etTitle.isEnabled = true
+                binding.etTitle.isClickable = true
+                binding.etContent.isEnabled = true
+                binding.etContent.isClickable = true
+                binding.btnEdit.visibility = View.GONE
+                binding.btnDone.visibility = View.VISIBLE
+                binding.btnDelete.visibility = View.GONE
+            }
+            if(!isEditMode){
+                binding.etTitle.isEnabled = false
+                binding.etTitle.isClickable = false
+                binding.etContent.isEnabled = false
+                binding.etContent.isClickable = false
+                binding.btnEdit.visibility = View.VISIBLE
+                binding.btnDone.visibility = View.GONE
+                binding.btnDelete.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun setNoteContent() {
+        lifecycleScope.launch {
+            val note = withContext(IO){
+                viewModel.getNoteByID(noteId)
+            }
+            binding.etTitle.setText(note.title)
+            binding.etContent.setText(note.body)
         }
     }
 
@@ -74,8 +108,8 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun onDone(){
-        if(binding.noteEditTitle.text?.isEmpty()!!){
-            binding.noteEditTitle.error = "Title can't be empty"
+        if(binding.etTitle.text?.isEmpty()!!){
+            binding.etTitle.error = "Title can't be empty"
             return
         }
         if(isNewNote){
@@ -86,27 +120,26 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun updateNote() {
-        Log.d("meow", "updateNote: yes ")
-        val title = binding.noteEditTitle.text.toString()
-        val description = binding.noteEditDescription.text.toString()
-        viewModel.updateNote( Notes(args.clickedNote!!.id, title, description, getDate()) )
+        val title = binding.etTitle.text.toString()
+        val description = binding.etContent.text.toString()
+        viewModel.updateNote( Notes(noteId, title, description, getDate()) )
         onBack()
     }
 
     private fun createNote() {
-        val title = binding.noteEditTitle.text.toString()
-        val description = binding.noteEditDescription.text.toString()
+        val title = binding.etTitle.text.toString()
+        val description =
+            binding.etContent.text.toString().ifBlank { "" }
         viewModel.insertNote(Notes(0,title,description,getDate()))
         onBack()
     }
 
     private fun onBack(){
-        hideKeyboard()
         findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
     }
 
     private fun onEditClicked() {
-        viewModel.notifyModeChanged()
+        viewModel.setIsEditMode(true)
     }
 
     private fun getDate(): String{
@@ -116,15 +149,13 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun showKeyboard() {
-        binding.noteEditTitle.requestFocus()
-        inputManager.showSoftInput(binding.noteEditTitle, InputMethodManager.SHOW_IMPLICIT)
+        binding.etTitle.requestFocus()
+        inputManager.showSoftInput(binding.etTitle, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun hideKeyboard(){
-        binding.noteEditTitle.requestFocus()
-        inputManager.hideSoftInputFromWindow(binding.noteEditTitle.windowToken,0)
+        inputManager.hideSoftInputFromWindow(binding.etTitle.windowToken,0)
     }
-
     private fun setUpBottomSheet() {
         val bottomSheet = BottomSheetDialog(requireContext())
         bottomSheet.setContentView(R.layout.delete_bottomsheet)
@@ -132,7 +163,7 @@ class EditNoteFragment : Fragment() {
         val btnBottomSheetNo = bottomSheet.findViewById<Button>(R.id.no)
         bottomSheet.show()
         btnBottomSheetYes?.setOnClickListener {
-            viewModel.deleteNote(args.clickedNote!!)
+            viewModel.deleteNote(noteId)
             bottomSheet.dismiss()
             findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
         }

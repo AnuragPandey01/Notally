@@ -1,6 +1,7 @@
 package com.nekodev.notally.ui
 
 import android.app.Application
+import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,19 +10,18 @@ import com.nekodev.notally.database.NotesDao
 import com.nekodev.notally.database.NotesDataBase.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class NotesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: NotesDao
-    private val _isEditMode: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
+    private val _isEditMode: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isEditMode : LiveData<Boolean>
         get() = _isEditMode
 
     init {
-        _isEditMode.value = true
         dao = getDatabaseInstance(application).noteDao()
     }
 
@@ -41,14 +41,21 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteNote(note: Notes) {
+    fun deleteNote(id: Int) {
         CoroutineScope(IO).launch {
-            dao.deleteNote(note)
+            dao.deleteNote(id)
         }
     }
 
-    fun notifyModeChanged(){
-        _isEditMode.value = !_isEditMode.value!!
+    suspend fun getNoteByID(id: Int):Notes = coroutineScope {
+        val note = async {
+            dao.getNote(id)
+        }
+        note.await()
+    }
+
+    fun setIsEditMode(boolean: Boolean){
+        _isEditMode.value = boolean
     }
 
 

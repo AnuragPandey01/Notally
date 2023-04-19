@@ -5,7 +5,7 @@
     <string name="back">back</string>
     <string name="title">Title</string>
     <string name="search_notes">Search notes</string>
-    <string name="notes">Notes</string>
+    <string name="notes">Notally</string>
     <string name="add_new_note">add new note</string>
     <string name="tip_tap_icon_to_add_new_note">Tip: Tap \'+\' icon to add new Note</string>
     <string name="do_you_really_want_to_n_delete_note">Do you really want to \n delete note?</string>
