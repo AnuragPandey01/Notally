@@ -92,4 +92,11 @@
             android:background="@null"
             android:fontFamily="@font/nunito_regular"/>
     </ScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_title"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

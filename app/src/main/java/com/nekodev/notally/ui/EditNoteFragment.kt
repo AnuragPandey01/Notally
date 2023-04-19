@@ -15,6 +15,7 @@ import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
 import com.nekodev.notally.util.hideKeyboard
 import com.nekodev.notally.util.showKeyboard
+import com.nekodev.notally.util.showToast
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -95,6 +96,9 @@ class EditNoteFragment : Fragment() {
         binding.btnBack.setOnClickListener { onBack() }
         binding.btnDelete.setOnClickListener { deleteNote() }
         binding.btnEdit.setOnClickListener { onEditClicked() }
+        binding.view.setOnClickListener {
+            binding.etContent.requestFocus()
+        }
     }
 
     private fun deleteNote() {
