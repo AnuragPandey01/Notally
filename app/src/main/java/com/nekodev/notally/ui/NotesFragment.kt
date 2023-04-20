@@ -123,11 +123,12 @@ class NotesFragment : Fragment() {
         }
 
         private fun showSnackBar(note: Notes) {
-            Snackbar.make(binding.root, note.title,Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, "Note Deleted!",Snackbar.LENGTH_LONG)
                 .setAnchorView(binding.addNote)
                 .setAction("UNDO") {
                     viewModel.insertNote(note)
                 }
+                .setTextColor(resources.getColor(R.color.icon_background,null))
                 .setBackgroundTint(resources.getColor(R.color.icon_background,null))
                 .setActionTextColor(Color.WHITE)
                 .show()
