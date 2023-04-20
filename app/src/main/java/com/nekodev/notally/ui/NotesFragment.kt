@@ -78,7 +78,9 @@ class NotesFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                filter(s.toString())
+                if(mList.isNotEmpty()){
+                    filter(s.toString())
+                }
             }
 
         })
