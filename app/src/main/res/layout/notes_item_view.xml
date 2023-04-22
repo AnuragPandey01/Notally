@@ -24,11 +24,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
-                android:maxLines="10"
-                tools:text="Hello world is \n your first \nprogram"
+                tools:text="Hello world is your first \nprogram"
                 android:fontFamily="@font/nunito_extra_bold"
                 android:textSize="16sp"
                 android:textColor="#121212"/>
+
+            <TextView
+                android:id="@+id/note_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAlignment="viewStart"
+                android:maxLines="10"
+                android:ellipsize="end"
+                android:layout_marginTop="8dp"
+                tools:text="Hello world is your first \nprogram"
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="14sp"
+                android:textColor="#A3121212"/>
 
             <TextView
                 android:id="@+id/date"
@@ -38,7 +51,7 @@
                 android:layout_marginTop="16dp"
                 android:textAlignment="viewEnd"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_extra_bold"
+                android:fontFamily="@font/nunito_bold"
                 android:textColor="#404040"/>
 
         </LinearLayout>

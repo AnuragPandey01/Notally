@@ -23,6 +23,7 @@ class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<Notes
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentNotes = noteList[position]
         holder.title.text = currentNotes.title
+        holder.content.text = currentNotes.body
         holder.date.text = currentNotes.date
         holder.noteHolder.setCardBackgroundColor(Color.parseColor(ColorPicker.getBackgroundColor()))
         holder.noteHolder.setOnClickListener {
@@ -37,6 +38,7 @@ class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<Notes
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.note_title)
+        val content: TextView = itemView.findViewById(R.id.note_content)
         val date: TextView = itemView.findViewById(R.id.date)
         val noteHolder: CardView = itemView.findViewById(R.id.note_holder)
     }
