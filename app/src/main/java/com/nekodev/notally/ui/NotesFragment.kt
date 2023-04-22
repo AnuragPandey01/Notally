@@ -128,7 +128,7 @@ class NotesFragment : Fragment() {
                 .setAction("UNDO") {
                     viewModel.insertNote(note)
                 }
-                .setTextColor(resources.getColor(R.color.icon_background,null))
+                .setTextColor(resources.getColor(R.color.white,null))
                 .setBackgroundTint(resources.getColor(R.color.icon_background,null))
                 .setActionTextColor(Color.WHITE)
                 .show()
