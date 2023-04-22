@@ -1,4 +1,4 @@
-package com.nekodev.notally.ui
+package com.nekodev.notally.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.nekodev.notally.database.Notes
 import com.nekodev.notally.databinding.FragmentEditNoteBinding
 import com.nekodev.notally.util.hideKeyboard
 import com.nekodev.notally.util.showKeyboard
-import com.nekodev.notally.util.showToast
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

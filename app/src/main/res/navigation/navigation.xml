@@ -7,16 +7,17 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.nekodev.notally.ui.NotesFragment"
+        android:name="com.nekodev.notally.ui.home.NotesFragment"
         android:label="notes_fragment"
         tools:layout="@layout/notes_fragment" >
         <action
             android:id="@+id/action_notesFragment_to_detailNoteFragment"
             app:destination="@id/detailNoteFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/detailNoteFragment"
-        android:name="com.nekodev.notally.ui.EditNoteFragment"
+        android:name="com.nekodev.notally.ui.home.EditNoteFragment"
         android:label="fragment_detail_note"
         tools:layout="@layout/fragment_edit_note" >
         <action
@@ -27,4 +28,14 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.nekodev.notally.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="com.nekodev.notally.ui.trash.TrashFragment"
+        android:label="fragment_trash"
+        tools:layout="@layout/fragment_trash" />
 </navigation>

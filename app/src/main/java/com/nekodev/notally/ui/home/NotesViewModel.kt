@@ -1,4 +1,4 @@
-package com.nekodev.notally.ui
+package com.nekodev.notally.ui.home
 
 import android.app.Application
 import android.provider.ContactsContract

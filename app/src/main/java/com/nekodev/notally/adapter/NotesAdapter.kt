@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nekodev.notally.R
 import com.nekodev.notally.database.Notes
-import com.nekodev.notally.ui.NotesFragmentDirections
+import com.nekodev.notally.ui.home.NotesFragmentDirections
 import com.nekodev.notally.util.ColorPicker
 
 class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
