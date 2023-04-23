@@ -63,8 +63,9 @@ class NotesFragment : Fragment() {
             binding.ilSearch.visibility = View.GONE
             binding.btnSearch.visibility = View.VISIBLE
             binding.notesHeading.visibility = View.VISIBLE
-
-            adapter.filterList(mList)
+            if(mList.isNotEmpty()){
+                adapter.filterList(mList)
+            }
             requireContext().hideKeyboard(binding.etSearch)
         }
 
