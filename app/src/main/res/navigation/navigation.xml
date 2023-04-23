@@ -21,7 +21,8 @@
         tools:layout="@layout/fragment_edit_note" >
         <action
             android:id="@+id/action_detailNoteFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+            app:destination="@id/notesFragment"
+            app:popUpTo="@id/detailNoteFragment" />
         <argument
             android:name="clickedNote"
             app:argType="integer"
