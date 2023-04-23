@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/icon_background"
+    tools:context=".ui.InfoBottomSheetFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/ic_info"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_created_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="16dp"
+        android:textSize="16sp"
+        android:text="@string/created_at"
+        android:textColor="@color/on_background"
+        app:drawableStartCompat="@drawable/ic_clock" />
+
+    <TextView
+        android:id="@+id/tv_updated_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="16dp"
+        android:textSize="16sp"
+        android:text="@string/updated_at"
+        android:textColor="@color/on_background"
+        app:drawableStartCompat="@drawable/ic_update" />
+
+    <TextView
+        android:id="@+id/tv_letter_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="16dp"
+        android:textSize="16sp"
+        android:text="@string/letter_count"
+        android:textColor="@color/on_background"
+        app:drawableStartCompat="@drawable/ic_lines" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -89,7 +89,7 @@ class NotesFragment : Fragment() {
     private fun filter(string: String) {
         val filteredList: ArrayList<Notes> = ArrayList()
         for(item in mList){
-            if(item.title.lowercase().contains(string.lowercase())){
+            if(item.title.lowercase().contains(string.lowercase()) || item.body.lowercase().contains(string.lowercase()) ){
                 filteredList.add(item)
             }
         }

@@ -11,7 +11,9 @@
         <item name="colorOnSecondary">#fbfbfb</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >@color/background_color</item>
+
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/nunito_regular</item>
     </style>
 
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/icon_background"
+    tools:context=".ui.OptionsBottomSheetFragment"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_make_copy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Make a copy"
+        android:textColor="@color/on_background"
+        android:padding="16dp"
+        app:drawableStartCompat="@drawable/ic_copy"
+        android:drawablePadding="32dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Send"
+        android:padding="16dp"
+        android:textColor="@color/on_background"
+        app:drawableStartCompat="@drawable/ic_share"
+        android:drawablePadding="32dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Info"
+        android:padding="16dp"
+        android:textColor="@color/on_background"
+        app:drawableStartCompat="@drawable/ic_info"
+        android:drawablePadding="32dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

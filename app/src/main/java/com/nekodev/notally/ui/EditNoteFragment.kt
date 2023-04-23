@@ -1,5 +1,6 @@
 package com.nekodev.notally.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,10 +25,11 @@ import java.util.*
 class EditNoteFragment : Fragment() {
 
     private lateinit var binding: FragmentEditNoteBinding
-    private var noteId  = -1
+    private lateinit var mNote: Notes
+    private var noteId = -1
     private var isNewNote = false
 
-    private val viewModel : NotesViewModel by lazy {
+    private val viewModel: NotesViewModel by lazy {
         ViewModelProvider(this).get(NotesViewModel::class.java)
     }
 
@@ -35,7 +37,7 @@ class EditNoteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         binding = FragmentEditNoteBinding.inflate(layoutInflater)
 
         //get arguments arguments(clickedNote:Notes?, editMode = true)
@@ -49,16 +51,16 @@ class EditNoteFragment : Fragment() {
 
         setOnClickListener()
 
-        if(noteId == -1){
+        if (noteId == -1) {
             isNewNote = true
             viewModel.setIsEditMode(true)
-        }else{
+        } else {
             setNoteContent()
             viewModel.setIsEditMode(false)
         }
 
-        viewModel.isEditMode.observe(viewLifecycleOwner){ isEditMode ->
-            if(isEditMode) {
+        viewModel.isEditMode.observe(viewLifecycleOwner) { isEditMode ->
+            if (isEditMode) {
                 requireContext().showKeyboard(binding.etTitle)
                 binding.etTitle.isEnabled = true
                 binding.etTitle.isClickable = true
@@ -67,8 +69,9 @@ class EditNoteFragment : Fragment() {
                 binding.btnEdit.visibility = View.GONE
                 binding.btnDone.visibility = View.VISIBLE
                 binding.btnDelete.visibility = View.GONE
+                binding.bottomCard.visibility = View.GONE
             }
-            if(!isEditMode){
+            if (!isEditMode) {
                 binding.etTitle.isEnabled = false
                 binding.etTitle.isClickable = false
                 binding.etContent.isEnabled = false
@@ -76,17 +79,20 @@ class EditNoteFragment : Fragment() {
                 binding.btnEdit.visibility = View.VISIBLE
                 binding.btnDone.visibility = View.GONE
                 binding.btnDelete.visibility = View.VISIBLE
+                binding.bottomCard.visibility = View.VISIBLE
             }
         }
     }
 
     private fun setNoteContent() {
         lifecycleScope.launch {
-            val note = withContext(IO){
+            val note = withContext(IO) {
                 viewModel.getNoteByID(noteId)
             }
             binding.etTitle.setText(note.title)
             binding.etContent.setText(note.body)
+            binding.tvLastEdited.text = "Edited ${note.date}"
+            mNote = note
         }
     }
 
@@ -95,22 +101,61 @@ class EditNoteFragment : Fragment() {
         binding.btnBack.setOnClickListener { onBack() }
         binding.btnDelete.setOnClickListener { deleteNote() }
         binding.btnEdit.setOnClickListener { onEditClicked() }
-        binding.view.setOnClickListener {
-            binding.etContent.requestFocus()
+
+        binding.btnOptions.setOnClickListener {
+            OptionsBottomSheetFragment(
+                object : OptionsBottomSheetFragment.OptionsBottomSheetFragmentParams() {
+                    override fun onMakeCopy() {
+                        viewModel.insertNote(
+                            Notes(
+                                0,
+                                mNote.title,
+                                mNote.body,
+                                getDate(),
+                                getDate()
+                            )
+                        )
+                        findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
+                    }
+
+                    override fun onSend() {
+                        val intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            type = "text/plain"
+                            putExtra(
+                                Intent.EXTRA_TEXT,
+                                getString(R.string.send_note_template, mNote.title, mNote.body)
+                            )
+                        }
+                        val chooser = Intent.createChooser(intent, "Complete action using...")
+                        startActivity(chooser)
+                    }
+
+                    override fun onInfo() {
+                        InfoBottomSheetFragment(
+                            createdAt = mNote.created_at,
+                            updatedAt = mNote.date,
+                            charCount = mNote.body.length + mNote.title.length
+                        ).show(parentFragmentManager, INFO_BOTTOM_SHEET_TAG)
+                    }
+
+                }
+            ).show(parentFragmentManager, OPTIONS_BOTTOM_SHEET_TAG)
         }
+
     }
 
     private fun deleteNote() {
         requireContext().hideKeyboard(binding.etTitle)
-        setUpBottomSheet()
+        setUpDeleteBottomSheet()
     }
 
-    private fun onDone(){
-        if(binding.etTitle.text?.isEmpty()!!){
+    private fun onDone() {
+        if (binding.etTitle.text?.isEmpty()!!) {
             binding.etTitle.error = "Title can't be empty"
             return
         }
-        if(isNewNote){
+        if (isNewNote) {
             createNote()
             return
         }
@@ -120,19 +165,19 @@ class EditNoteFragment : Fragment() {
     private fun updateNote() {
         val title = binding.etTitle.text.toString()
         val description = binding.etContent.text.toString()
-        viewModel.updateNote( Notes(noteId, title, description, getDate()) )
+        viewModel.updateNote(Notes(noteId, title, description, getDate(), created_at = mNote.date))
         onBack()
     }
 
     private fun createNote() {
         val title = binding.etTitle.text.toString()
         val description =
-            binding.etContent.text.toString().ifBlank { "" }
-        viewModel.insertNote(Notes(0,title,description,getDate()))
+            binding.etContent.text.toString().ifBlank { " " }
+        viewModel.insertNote(Notes(0, title, description, getDate(),getDate()))
         onBack()
     }
 
-    private fun onBack(){
+    private fun onBack() {
         findNavController().navigate(R.id.action_detailNoteFragment_to_notesFragment)
     }
 
@@ -140,13 +185,13 @@ class EditNoteFragment : Fragment() {
         viewModel.setIsEditMode(true)
     }
 
-    private fun getDate(): String{
+    private fun getDate(): String {
         val calendar = Calendar.getInstance()
         val simpleDateFormat = SimpleDateFormat("dd LLL yyyy")
         return simpleDateFormat.format(calendar.time).toString()
     }
 
-    private fun setUpBottomSheet() {
+    private fun setUpDeleteBottomSheet() {
         val bottomSheet = BottomSheetDialog(requireContext())
         bottomSheet.setContentView(R.layout.delete_bottomsheet)
         val btnBottomSheetYes = bottomSheet.findViewById<Button>(R.id.yes)
@@ -160,5 +205,11 @@ class EditNoteFragment : Fragment() {
         btnBottomSheetNo?.setOnClickListener {
             bottomSheet.dismiss()
         }
+    }
+
+    companion object {
+        const val OPTIONS_BOTTOM_SHEET_TAG = "OPTIONS_BOTTOM_SHEET"
+        const val INFO_BOTTOM_SHEET_TAG = "INFO_BOTTOM_SHEET"
+        const val TAG = "EDIT_NOTE_FRAGMENT"
     }
 }

@@ -14,4 +14,10 @@
     <string name="description_goes_here">Description goes here</string>
     <string name="edit">edit</string>
     <string name="save">Save</string>
+
+    <string name="created_at">Created At : %1$s</string>
+    <string name="updated_at">Updated At : %1$s</string>
+    <string name="letter_count">letter count : %1$d</string>
+
+    <string name="send_note_template"><b>%1$s</b> \n \n %2$s</string>
 </resources>

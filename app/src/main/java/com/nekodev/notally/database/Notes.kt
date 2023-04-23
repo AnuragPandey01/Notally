@@ -17,5 +17,7 @@ data class Notes(
 
     val body: String,
 
-    val date: String
+    val date: String,
+
+    val created_at: String
     ) : Parcelable

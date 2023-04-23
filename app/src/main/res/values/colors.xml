@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <!--night theme-->
     <color name="background_color">#001220</color>
+    <color name="on_background">#EBFFFFFF</color>
     <color name="color_1">#e5b9af</color>
     <color name="color_2">#c3c4e5</color>
     <color name="color_3">#c3efc0</color>

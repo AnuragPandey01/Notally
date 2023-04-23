@@ -1,7 +1,6 @@
 package com.nekodev.notally.ui
 
 import android.app.Application
-import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
