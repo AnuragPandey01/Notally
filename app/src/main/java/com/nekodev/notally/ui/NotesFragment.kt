@@ -118,7 +118,7 @@ class NotesFragment : Fragment() {
 
     private val swipeGesture = object : SwipeGuesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val note = adapter.onSwipe(viewHolder.adapterPosition)
+            val note = adapter.onSwipe(viewHolder.bindingAdapterPosition)
             viewModel.deleteNote(note.id)
             showSnackBar(note)
         }
