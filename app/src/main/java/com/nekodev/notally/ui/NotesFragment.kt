@@ -55,7 +55,7 @@ class NotesFragment : Fragment() {
             binding.ilSearch.visibility = View.VISIBLE
             binding.btnSearch.visibility = View.GONE
             binding.notesHeading.visibility = View.GONE
-
+            binding.btnSort.visibility = View.GONE
             requireContext().showKeyboard(binding.etSearch)
         }
 
@@ -63,6 +63,7 @@ class NotesFragment : Fragment() {
             binding.ilSearch.visibility = View.GONE
             binding.btnSearch.visibility = View.VISIBLE
             binding.notesHeading.visibility = View.VISIBLE
+            binding.btnSort.visibility = View.VISIBLE
             if(mList.isNotEmpty()){
                 adapter.filterList(mList)
             }
