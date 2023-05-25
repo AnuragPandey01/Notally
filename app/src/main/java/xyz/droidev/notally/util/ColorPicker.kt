@@ -1,4 +1,4 @@
-package com.nekodev.notally.util
+package xyz.droidev.notally.util
 
 object ColorPicker {
     private var i = 0

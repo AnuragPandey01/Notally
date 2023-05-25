@@ -1,4 +1,4 @@
-package com.nekodev.notally.database
+package xyz.droidev.notally.database
 
 import android.content.Context
 import androidx.room.Database

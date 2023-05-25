@@ -1,12 +1,12 @@
-package com.nekodev.notally.ui
+package xyz.droidev.notally.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.nekodev.notally.R
-import com.nekodev.notally.databinding.BottomsheetInfoBinding
+import xyz.droidev.notally.R
+import xyz.droidev.notally.databinding.BottomsheetInfoBinding
 
 class InfoBottomSheetFragment(val charCount:Int,val createdAt: String, val updatedAt: String): BottomSheetDialogFragment() {
 

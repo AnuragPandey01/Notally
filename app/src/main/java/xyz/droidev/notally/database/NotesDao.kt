@@ -1,4 +1,4 @@
-package com.nekodev.notally.database
+package xyz.droidev.notally.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.nekodev.notally.ui.NotesFragment"
+        android:name="xyz.droidev.notally.ui.NotesFragment"
         android:label="notes_fragment"
         tools:layout="@layout/notes_fragment" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailNoteFragment"
-        android:name="com.nekodev.notally.ui.EditNoteFragment"
+        android:name="xyz.droidev.notally.ui.EditNoteFragment"
         android:label="fragment_detail_note"
         tools:layout="@layout/fragment_edit_note" >
         <action

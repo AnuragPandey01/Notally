@@ -1,4 +1,4 @@
-package com.nekodev.notally
+package xyz.droidev.notally
 
 import org.junit.Test
 

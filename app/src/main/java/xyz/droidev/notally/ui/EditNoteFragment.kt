@@ -1,4 +1,4 @@
-package com.nekodev.notally.ui
+package xyz.droidev.notally.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.nekodev.notally.R
-import com.nekodev.notally.database.Notes
-import com.nekodev.notally.databinding.FragmentEditNoteBinding
-import com.nekodev.notally.util.hideKeyboard
-import com.nekodev.notally.util.showKeyboard
+import xyz.droidev.notally.R
+import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.databinding.FragmentEditNoteBinding
+import xyz.droidev.notally.util.hideKeyboard
+import xyz.droidev.notally.util.showKeyboard
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

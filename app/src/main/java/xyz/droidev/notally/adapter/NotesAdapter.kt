@@ -1,4 +1,4 @@
-package com.nekodev.notally.adapter
+package xyz.droidev.notally.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.nekodev.notally.R
-import com.nekodev.notally.database.Notes
-import com.nekodev.notally.ui.NotesFragmentDirections
-import com.nekodev.notally.util.ColorPicker
+import xyz.droidev.notally.R
+import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.ui.NotesFragmentDirections
+import xyz.droidev.notally.util.ColorPicker
 
 class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 

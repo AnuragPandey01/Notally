@@ -1,4 +1,4 @@
-package com.nekodev.notally.util
+package xyz.droidev.notally.util
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager

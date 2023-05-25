@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.nekodev.notally"
+        applicationId "xyz.droidev.notally"
         minSdk 23
         targetSdk 33
         versionCode 1

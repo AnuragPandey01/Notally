@@ -1,8 +1,8 @@
-package com.nekodev.notally.ui
+package xyz.droidev.notally.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.nekodev.notally.R
+import xyz.droidev.notally.R
 
 
 class MainActivity : AppCompatActivity() {

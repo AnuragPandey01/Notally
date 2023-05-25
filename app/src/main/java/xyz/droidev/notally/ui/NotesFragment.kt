@@ -1,4 +1,4 @@
-package com.nekodev.notally.ui
+package xyz.droidev.notally.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.nekodev.notally.R
-import com.nekodev.notally.adapter.NotesAdapter
-import com.nekodev.notally.database.Notes
-import com.nekodev.notally.databinding.NotesFragmentBinding
-import com.nekodev.notally.util.SwipeGuesture
-import com.nekodev.notally.util.hideKeyboard
-import com.nekodev.notally.util.showKeyboard
+import xyz.droidev.notally.R
+import xyz.droidev.notally.adapter.NotesAdapter
+import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.databinding.NotesFragmentBinding
+import xyz.droidev.notally.util.SwipeGuesture
+import xyz.droidev.notally.util.hideKeyboard
+import xyz.droidev.notally.util.showKeyboard
 
 class NotesFragment : Fragment() {
 

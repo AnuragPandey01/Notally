@@ -1,4 +1,4 @@
-package com.nekodev.notally.util
+package xyz.droidev.notally.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
