@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import xyz.droidev.notally.R
 import xyz.droidev.notally.databinding.BottomsheetOptionsBinding
 
 class OptionsBottomSheetFragment(private val params: OptionsBottomSheetFragmentParams): BottomSheetDialogFragment() {

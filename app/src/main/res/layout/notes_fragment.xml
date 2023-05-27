@@ -101,6 +101,7 @@
         android:layout_margin="9dp"
         android:contentDescription="@string/add_new_note"
         android:src="@drawable/ic_add"
+        app:tint="@color/on_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
