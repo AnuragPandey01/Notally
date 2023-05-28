@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import xyz.droidev.notally.R
-import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.data.local.database.Notes
 import xyz.droidev.notally.ui.NotesFragmentDirections
 import xyz.droidev.notally.util.ColorPicker
 
@@ -43,7 +43,7 @@ class NotesAdapter(private var noteList: List<Notes>):RecyclerView.Adapter<Notes
         val noteHolder: CardView = itemView.findViewById(R.id.note_holder)
     }
 
-    fun onSwipe(position: Int): Notes{
+    fun onSwipe(position: Int): Notes {
         return noteList[position]
     }
     fun filterList(filteredList: List<Notes>) {

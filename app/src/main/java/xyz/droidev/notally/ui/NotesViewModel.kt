@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import xyz.droidev.notally.database.Notes
-import xyz.droidev.notally.database.NotesDao
-import xyz.droidev.notally.database.NotesDataBase.Companion.getDatabaseInstance
+import xyz.droidev.notally.data.local.database.Notes
+import xyz.droidev.notally.data.local.database.NotesDao
+import xyz.droidev.notally.data.local.database.NotesDataBase.Companion.getDatabaseInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
@@ -46,7 +46,7 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun getNoteByID(id: Int):Notes = coroutineScope {
+    suspend fun getNoteByID(id: Int): Notes = coroutineScope {
         val note = async {
             dao.getNote(id)
         }

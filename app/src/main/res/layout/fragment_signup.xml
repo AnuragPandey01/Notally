@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/background_color"
+    tools:context=".ui.auth.SignupFragment">
+
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Secure your notes with"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_notally"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="Notally."
+        android:textColor="@color/color_2"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_header"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeWidth="2dp"
+        app:cornerRadius="8dp"
+        android:textStyle="bold"
+        app:strokeColor="@color/color_2"
+        android:paddingVertical="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:text="Login"
+        app:rippleColor="#99C3C4E5"
+        android:textColor="@color/on_background"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_login_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Already have an account?"
+        app:layout_constraintBottom_toTopOf="@id/btn_login"
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/tv_login_question"
+        app:layout_constraintTop_toBottomOf="@id/tv_notally"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="Signup"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            app:boxStrokeErrorColor="@color/color_1"
+            android:layout_marginHorizontal="8dp"
+            android:hint="Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            app:boxStrokeErrorColor="@color/color_1"
+            android:layout_marginHorizontal="8dp"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:boxStrokeErrorColor="@color/color_1"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="8dp"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cb_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            style="@style/Widget.Material3.CheckedTextView"
+            android:text="I agree with the terms &amp; conditions."
+            android:textColor="@color/on_background"
+            android:layout_marginBottom="8dp"
+            android:textSize="14sp"
+            android:buttonTint="@color/color_2"
+            android:checked="false"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:strokeWidth="2dp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/color_2"
+                android:layout_marginHorizontal="8dp"
+                android:text="Signup"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"
+                android:textColor="@color/background_color"
+                android:textSize="16sp"
+                />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_loading"
+                android:layout_width="96dp"
+                android:layout_height="48dp"
+                app:lottie_autoPlay="true"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:lottie_loop="true"
+                android:padding="0dp"
+                android:layout_gravity="center"
+                app:lottie_rawRes="@raw/loading"/>
+        </FrameLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

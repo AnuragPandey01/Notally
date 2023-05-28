@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import xyz.droidev.notally.R
 import xyz.droidev.notally.adapter.NotesAdapter
-import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.data.local.database.Notes
 import xyz.droidev.notally.databinding.NotesFragmentBinding
 import xyz.droidev.notally.util.SwipeGuesture
 import xyz.droidev.notally.util.hideKeyboard

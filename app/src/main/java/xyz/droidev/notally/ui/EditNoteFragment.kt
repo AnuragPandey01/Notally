@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import xyz.droidev.notally.R
-import xyz.droidev.notally.database.Notes
+import xyz.droidev.notally.data.local.database.Notes
 import xyz.droidev.notally.databinding.FragmentEditNoteBinding
 import xyz.droidev.notally.util.hideKeyboard
 import xyz.droidev.notally.util.showKeyboard
