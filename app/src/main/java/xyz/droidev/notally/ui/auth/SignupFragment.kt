@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.droidev.notally.data.model.request.SignupBody
 import xyz.droidev.notally.databinding.FragmentSignupBinding
-import xyz.droidev.notally.util.ErrorCredential
-import xyz.droidev.notally.util.NetworkResult
-import xyz.droidev.notally.util.hideKeyboard
-import xyz.droidev.notally.util.showToast
+import xyz.droidev.notally.util.*
 
 @AndroidEntryPoint
 class SignupFragment : Fragment() {
@@ -29,6 +26,13 @@ class SignupFragment : Fragment() {
     ): View {
         _binding = FragmentSignupBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onStart() {
+        if(viewModel.isUserLoggedIn()){
+            findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToNotesFragment())
+        }
+        super.onStart()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,9 +56,14 @@ class SignupFragment : Fragment() {
                     }
 
                     is NetworkResult.Error -> {
+
                         binding.lottieLoading.visibility = View.GONE
                         binding.btnSignup.visibility = View.VISIBLE
-                        requireContext().showToast(networkResult.message!!)
+
+                        requireActivity()
+                            .makeNotallySnackbar(SnackbarLevel.ERROR ,binding.root,networkResult.message!!,"Error")
+                            .setAnchorView(binding.tvNotally)
+                            .show()
                     }
                 }
             }
@@ -63,17 +72,12 @@ class SignupFragment : Fragment() {
     private fun setOnClickListeners(){
 
         binding.btnLogin.setOnClickListener {
-            //TODO: Navigate to login fragment
+           findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToLoginFragment())
         }
 
         binding.btnSignup.setOnClickListener {
 
             requireContext().hideKeyboard(binding.btnSignup)
-
-            if(binding.cbTerms.isChecked.not()){
-                requireContext().showToast("Please accept terms and conditions")
-                return@setOnClickListener
-            }
 
             val name = binding.etName.text.toString()
             val email = binding.etEmail.text.toString()
@@ -81,10 +85,18 @@ class SignupFragment : Fragment() {
 
             val error = viewModel.validateCredentials(email,name,password,false)
 
-            if(error is ErrorCredential.None){
+            if(error is ErrorCredential.None && binding.cbTerms.isChecked){
+
                 viewModel.signup(SignupBody(name,email,password))
-            }
-            else{
+
+            }else if(error is ErrorCredential.None && binding.cbTerms.isChecked.not()){
+
+                requireActivity()
+                    .makeNotallySnackbar(SnackbarLevel.ERROR ,binding.root,"Please Accept terms & conditions","Error")
+                    .setAnchorView(binding.tvNotally)
+                    .show()
+
+            }else{
                 handleErrorCredential(error)
             }
         }

@@ -5,13 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import org.json.JSONObject
 import retrofit2.Response
 import xyz.droidev.notally.data.api.UserApiService
+import xyz.droidev.notally.data.local.prefrences.PreferenceManager
 import xyz.droidev.notally.data.model.request.LoginBody
 import xyz.droidev.notally.data.model.request.SignupBody
 import xyz.droidev.notally.data.model.response.AuthResponse
 import xyz.droidev.notally.util.NetworkResult
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val userApiService: UserApiService) {
+class UserRepository @Inject constructor(
+    private val userApiService: UserApiService,
+    private val prefManager: PreferenceManager
+) {
 
     private val _authResponseLiveData = MutableLiveData<NetworkResult<AuthResponse>>()
     val authResponseLiveData: LiveData<NetworkResult<AuthResponse>>
@@ -31,11 +35,24 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
         handleResponse(response)
     }
 
+    fun logout(){
+        prefManager.clearPrefs()
+    }
+
+    fun isUserLoggedIn() = prefManager.isLoggedIn()
 
     private fun handleResponse(response: Response<AuthResponse>) {
 
         if (response.isSuccessful && response.body() != null) {
-            _authResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+            val body = response.body()!!
+            prefManager.apply {
+                saveToken(body.accessToken)
+                saveEmail(body.user.email)
+                saveUsername(body.user.name)
+                saveUserId(body.user.id)
+                setLoggedIn(true)
+            }
+            _authResponseLiveData.postValue(NetworkResult.Success(body))
         }
         else if(response.errorBody()!=null){
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())

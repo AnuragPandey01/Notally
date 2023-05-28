@@ -38,6 +38,8 @@ class AuthViewModel @Inject constructor(private val  userRepository: UserReposit
         }
     }
 
+    fun isUserLoggedIn() = userRepository.isUserLoggedIn()
+
     fun validateCredentials(
         emailAddress: String,
         userName: String = "",

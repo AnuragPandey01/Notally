@@ -1,136 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="20dp"
+    android:paddingTop="86dp"
     android:background="@color/background_color"
     tools:context=".ui.auth.LoginFragment">
 
-    <TextView
-        android:id="@+id/tv_header"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Welcome back to"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tv_notally"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:text="Notally."
-        android:textColor="@color/color_2"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_header"/>
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:strokeWidth="2dp"
-        app:cornerRadius="8dp"
-        android:textStyle="bold"
-        app:strokeColor="@color/color_2"
-        android:paddingVertical="8dp"
-        android:layout_marginHorizontal="8dp"
-        android:text="Signup"
-        app:rippleColor="#99C3C4E5"
-        android:textColor="@color/on_background"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_login_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New to Notally ? Signup instead"
-        app:layout_constraintBottom_toTopOf="@id/btn_signup"
-        android:layout_marginBottom="16dp"
-        android:textSize="16sp"/>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/tv_login_question"
-        app:layout_constraintTop_toBottomOf="@id/tv_notally"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="20dp">
+        android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tv_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="Login"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Welcome back to"
             android:textSize="18sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_marginHorizontal="8dp"
-            android:hint="Email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="12dp"
-            app:endIconMode="password_toggle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
         <TextView
+            android:id="@+id/tv_notally"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="Forget Password?"
-            android:textAlignment="viewEnd"
-            android:layout_marginBottom="20dp"
-            android:textSize="16sp"/>
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Notally."
+            android:textColor="@color/color_2"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_header"/>
+
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:strokeWidth="2dp"
             app:cornerRadius="8dp"
-            app:strokeColor="@color/color_2"
-            android:layout_marginHorizontal="8dp"
-            android:text="Login"
-            android:paddingVertical="8dp"
             android:textStyle="bold"
-            android:textColor="@color/background_color"
+            app:strokeColor="@color/color_2"
+            android:paddingVertical="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:text="Signup"
+            app:rippleColor="#99C3C4E5"
+            android:textColor="@color/on_background"
             android:textSize="16sp"
+            android:layout_marginBottom="16dp"
             />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/tv_login_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New to Notally ? Signup instead"
+            app:layout_constraintBottom_toTopOf="@id/btn_signup"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/tv_login_question"
+            app:layout_constraintTop_toBottomOf="@id/tv_notally"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Login"
+                android:textSize="18sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_email_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginHorizontal="8dp"
+                android:hint="Email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_password_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="12dp"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_forget_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="Forget Password?"
+                android:textAlignment="viewEnd"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp"/>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:strokeWidth="2dp"
+                    app:cornerRadius="8dp"
+                    app:strokeColor="@color/color_2"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="Login"
+                    android:paddingVertical="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/background_color"
+                    android:textSize="16sp"
+                    />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie_loading"
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    app:lottie_autoPlay="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    android:padding="0dp"
+                    android:layout_gravity="center"
+                    app:lottie_rawRes="@raw/loading"/>
+            </FrameLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
